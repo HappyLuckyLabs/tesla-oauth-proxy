@@ -1,14 +1,19 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from .well-known directory
-app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));
+const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0vx8nDMGHfEbMNVQCEqJ
+OgGHmGhiVQfMjKhcnL5fFhPQzRf/J4tPKXqhKJ+xJP0XqzNP3u1uQ+/JKKGzJ1nB
+8wNqfZqHzZzFJJlFJQrGxIoqJoQcYxuVVOCBUvhSKM4d1PsP4fMgXQxJ2oEv5wgN
+V2nGNvOYRILCkKAGJmYNJgPjCCdDYJ3TdGNEGhXaD4hCGdMuXpM6ZVOITdgZCXH2
+JH5EpjzKmQzfIYxOmQvGhAHTxRRjsEDzIUfLJNsWBYGnJpNIqtQxdJqRqBQHnJhI
+LgqNBYAyGkKgwKRN9qNqkJQNLnDqZAGHJgvjE0vGdXJM0qCHpXaJqiSXOUMGLUqC
+MBMLtVxLOQNhNPfLPxcYRUZSFQIDAQAB
+-----END PUBLIC KEY-----`;
 
 // Health check
 app.get('/', (req, res) => {
@@ -17,14 +22,9 @@ app.get('/', (req, res) => {
 
 // Public key endpoint (required by Tesla)
 app.get('/.well-known/appspecific/com.tesla.3p.public-key.pem', (req, res) => {
-  try {
-    const publicKey = fs.readFileSync(path.join(__dirname, '.well-known/appspecific/com.tesla.3p.public-key.pem'), 'utf8');
-    res.set('Content-Type', 'application/x-pem-file');
-    res.send(publicKey);
-  } catch (error) {
-    console.error('Public key file not found:', error);
-    res.status(404).send('Public key not found');
-  }
+  console.log('Public key requested');
+  res.set('Content-Type', 'application/x-pem-file');
+  res.send(PUBLIC_KEY);
 });
 
 // Tesla OAuth callback endpoint
