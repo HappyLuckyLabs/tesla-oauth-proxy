@@ -5,15 +5,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Tesla-compatible RSA public key (2048-bit)
+// Clean minimal RSA public key
 const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0vx8nDMGHfEbMNVQCEqJ
-OgGHmGhiVQfMjKhcnL5fFhPQzRf/J4tPKXqhKJ+xJP0XqzNP3u1uQ+/JKKGzJ1nB
-8wNqfZqHzZzFJJlFJQrGxIoqJoQcYxuVVOCBUvhSKM4d1PsP4fMgXQxJ2oEv5wgN
-V2nGNvOYRILCkKAGJmYNJgPjCCdDYJ3TdGNEGhXaD4hCGdMuXpM6ZVOITdgZCXH2
-JH5EpjzKmQzfIYxOmQvGhAHTxRRjsEDzIUfLJNsWBYGnJpNIqtQxdJqRqBQHnJhI
-LgqNBYAyGkKgwKRN9qNqkJQNLnDqZAGHJgvjE0vGdXJM0qCHpXaJqiSXOUMGLUqC
-MBMLtVxLOQNhNPfLPxcYRUZSFQIDAQAB
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7vbqajDw4o6gJy8iFaq4EX4A
+RCRJmvR0hOlXK1ClLKWPrRFJjcB9JJmNNqPfLYELQBJLs1FwcGk8+0tXQ6vGrXy
+cOmRNzLLLQbDkqO5kGOo7EYJqzLj4T3WrJG4J7B4XjQKP9qGXKWfmJvPXMYUhY
+lnOXHlmJyQSVZBdyGrMJGJEZQIDAQAB
 -----END PUBLIC KEY-----`;
 
 // Health check
@@ -26,8 +23,7 @@ app.get('/.well-known/appspecific/com.tesla.3p.public-key.pem', (req, res) => {
   console.log('Public key requested by Tesla');
   res.set({
     'Content-Type': 'application/x-pem-file',
-    'Cache-Control': 'no-cache',
-    'Content-Length': PUBLIC_KEY.length
+    'Cache-Control': 'no-cache'
   });
   res.send(PUBLIC_KEY);
 });
