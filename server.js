@@ -5,12 +5,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Clean minimal RSA public key
+// Ultra-minimal RSA public key (512-bit)
 const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7vbqajDw4o6gJy8iFaq4EX4A
-RCRJmvR0hOlXK1ClLKWPrRFJjcB9JJmNNqPfLYELQBJLs1FwcGk8+0tXQ6vGrXy
-cOmRNzLLLQbDkqO5kGOo7EYJqzLj4T3WrJG4J7B4XjQKP9qGXKWfmJvPXMYUhY
-lnOXHlmJyQSVZBdyGrMJGJEZQIDAQAB
+MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANGVz7xQx8B5QXKqC1btLMJfDK+LvW7
+oK1sOm4QKL8TGz7+K5vD0RtJEGxdPR0wJVhMNzLYEXC3MzRKQNhfFfNsCAwEAAQ==
 -----END PUBLIC KEY-----`;
 
 // Health check
