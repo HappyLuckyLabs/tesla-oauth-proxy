@@ -5,10 +5,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Tesla-compatible EC (Elliptic Curve) public key
+// Your real EC public key
 const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE1A2B3C4D5E6F7G8H9I0J1K2L3M4N
-5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C0D1E2F3G4H5I6J7K8L9M0N1O2P3Q4R5S6T
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE9mPqLfoEw4Q7t9ajISDHCi6MjO1a
+WvV2MSl/dGAcvUIoCRe/zDBsf2Qn0oDQa8NJBMubUS4G5Tr7eeLOxkpm5A==
 -----END PUBLIC KEY-----`;
 
 // Health check
@@ -16,9 +16,9 @@ app.get('/', (req, res) => {
   res.send('Tesla OAuth Proxy is running!');
 });
 
-// Public key endpoint (Tesla requires EC public key)
+// Public key endpoint
 app.get('/.well-known/appspecific/com.tesla.3p.public-key.pem', (req, res) => {
-  console.log('EC public key requested by Tesla');
+  console.log('Your real EC public key requested by Tesla');
   res.set({
     'Content-Type': 'application/x-pem-file',
     'Cache-Control': 'no-cache'
