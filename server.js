@@ -5,6 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Tesla-compatible RSA public key (2048-bit)
 const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0vx8nDMGHfEbMNVQCEqJ
 OgGHmGhiVQfMjKhcnL5fFhPQzRf/J4tPKXqhKJ+xJP0XqzNP3u1uQ+/JKKGzJ1nB
@@ -22,8 +23,12 @@ app.get('/', (req, res) => {
 
 // Public key endpoint (required by Tesla)
 app.get('/.well-known/appspecific/com.tesla.3p.public-key.pem', (req, res) => {
-  console.log('Public key requested');
-  res.set('Content-Type', 'application/x-pem-file');
+  console.log('Public key requested by Tesla');
+  res.set({
+    'Content-Type': 'application/x-pem-file',
+    'Cache-Control': 'no-cache',
+    'Content-Length': PUBLIC_KEY.length
+  });
   res.send(PUBLIC_KEY);
 });
 
